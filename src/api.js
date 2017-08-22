@@ -30,8 +30,10 @@ EdgeGrid.prototype.auth = function(req) {
   this.request = auth.generate_auth(req, this.config.client_token, this.config.client_secret, this.config.access_token, this.config.host);
 };
 
-EdgeGrid.prototype.send = function(callback) {
-
+EdgeGrid.prototype.send = function(proxy, callback) {
+  if(proxy) {
+   this.request.proxy = proxy;   
+  }
   request(this.request, function(error, response, body) {
     if (error) { throw new Error(error); }
 
